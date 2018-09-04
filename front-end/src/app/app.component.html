@@ -1,0 +1,139 @@
+<div class="container">
+  <h3>Usuarios</h3>
+  <table class="table table-striped col-md-12">
+    <thead>
+    <tr>
+      <td>id</td>
+      <td>Nombre</td>
+      <td>Dependencia</td>
+      <td>Perfil</td>
+      <td>Fecha de nacimiento</td>
+      <td>Tareas</td>
+      <td>Activo</td>
+      <td>Operaciones</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of users">
+      <td>{{item.id}}</td>
+      <td>{{item.name}}</td>
+      <td>{{item.dependency}}</td>
+      <td>{{item.profile}}</td>
+      <td>{{item.birthDate | date: 'yyyy-MM-dd'}}</td>
+      <td *ngIf="item.tasks.length==0"></td>
+      <div *ngFor="let task of item.tasks">
+        <td>Tarea #{{task.id}}: {{task.name}}</td>
+      </div>
+      <td>{{item.active}}</td>
+      <td>
+        <button (click)="update(item.id)">Editar</button>
+        <button (click)="delete(item.id)">Borrar</button>
+      </td>
+
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="row">
+    <form class="col-md-6  col-custom" (ngSubmit)="onSubmit()" #product="ngForm" novalidate>
+      <h3>Agregar un nuevo usuario</h3>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="name">Nombre</label>
+          <input [(ngModel)]="model.name" #name="ngModel" name="title"
+                 type="text" class="form-control" id="name" placeholder="">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="dateBirth">Fecha de nacimiento</label>
+          <input [(ngModel)]="model.birthDate" #dateBirth="ngModel" name="coProduct"
+                 type="date" class="form-control" id="dateBirth" placeholder="">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="profile">Perfil</label>
+          <select [(ngModel)]="model.profile" class="form-control" #profile="ngModel"
+                  name="profile" id="profile">
+            <option *ngFor="let pro of profiles" [ngValue]="pro.value">{{pro.name}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="dependency">Dependencia</label>
+          <select [(ngModel)]="model.dependency" class="form-control" #dependency="ngModel"
+                  name="dependency" id="dependency">
+            <option *ngFor="let dependency of dependencies" [ngValue]="dependency.value">{{dependency.name}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="switchInstructions" style="margin-bottom: 10px">Activo</label>
+
+          <div class="">
+            <label class="switch-label-color">NO</label>
+            <span class="switch switch-md">
+            <input type="checkbox" class="switch" id="switchInstructions" id="switch-md" [(ngModel)]="model.active" name="allowInstructions">
+            <label for="switch-md"></label>
+          </span>
+            <label class="switch-label-color">SI</label>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="form-group form-btn">
+        <button type="submit" class="btn btn-primary float-right">Agregar</button>
+      </div>
+
+    </form>
+
+
+    <form class="col-md-6  col-custom" (ngSubmit)="onSubmitTask()" #product="ngForm" novalidate>
+      <h3>Agregar un nueva Tarea</h3>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="name">Nombre</label>
+          <input [(ngModel)]="modelTask.name" #nameTask="ngModel" name="nameTask"
+                 type="text" class="form-control" id="nameTask" placeholder="">
+        </div>
+      </div>
+      <div class="form-group form-btn">
+        <button type="submit" class="btn btn-primary float-right">Agregar</button>
+      </div>
+
+    </form>
+
+    <form class="col-md-6  col-custom" (ngSubmit)="onSubmitAddTask()" #product="ngForm" novalidate>
+      <h3>Asignar tareas</h3>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="taskToUser">Tareas</label>
+          <select [(ngModel)]="modelUserTask.taskUser" class="form-control" #taskToUser="ngModel"
+                  name="taskToUser" id="taskToUser">
+            <option *ngFor="let task of tasks" [ngValue]="task.id">{{task.name}}</option>
+          </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="userTask">Usuarios</label>
+          <select [(ngModel)]="modelUserTask.userTask" class="form-control" #userTask="ngModel"
+                  name="userTask" id="userTask">
+            <option *ngFor="let user of users" [ngValue]="user.id">{{user.name}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group form-btn">
+        <button type="submit" class="btn btn-primary float-right">Asignar</button>
+      </div>
+
+    </form>
+  </div>
+
+</div>
+
+
+
