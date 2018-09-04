@@ -1,6 +1,13 @@
 package com.boraji.tutorial.spring.model;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Fila {
+    private Task task;
+    private Integer duration;
+
     public Task getTask() {
         return task;
     }
@@ -17,6 +24,5 @@ public class Fila {
         this.duration = duration;
     }
 
-    private Task task;
-    private Integer duration;
+
 }

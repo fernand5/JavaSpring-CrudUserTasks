@@ -48,4 +48,11 @@ public class UserController {
       userService.delete(id);
       return ResponseEntity.ok().body("User has been deleted successfully.");
    }
+
+   /*---Delete a user by id---*/
+   @PutMapping("/user/{id}/addTask/{idTask}")
+   public ResponseEntity<?> update(@PathVariable("id") long id, @PathVariable("idTask") long idTask) {
+      userService.addTask(id, idTask);
+      return ResponseEntity.ok().body("Task added successfully.");
+   }
 }

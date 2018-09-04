@@ -1,10 +1,10 @@
 package com.boraji.tutorial.spring.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity(name = "User")
 public class User {
@@ -12,28 +12,26 @@ public class User {
    public enum UserProfile {
 
       Admin("ADMINISTRADOR"),
-      Consult("CONSULTA"),
-      Operator("OPERADOR");
+      Consult("CONSULT");
 
       public String value;
-
-      UserProfile(String value) {
+      UserProfile(String value){
          this.value = value;
       }
    }
 
-   public enum UserDependency {
-
-      Consult("CONSULTORIA"),
-      Company("FABRICA"),
-      Development("DESARROLLO");
-
-      public String value;
-
-      UserDependency(String value) {
-         this.value = value;
-      }
-   }
+//   public enum UserDependency {
+//
+//      Consult("CONSULTORIA"),
+//      Company("FABRICA"),
+//      Development("DESARROLLO");
+//
+//      public String value;
+//
+//      UserDependency(String value) {
+//         this.value = value;
+//      }
+//   }
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,12 +42,19 @@ public class User {
    private Boolean active;
 
    @Enumerated(EnumType.STRING)
-   private UserProfile profile[];
+   private UserProfile profile;
 
-   @Enumerated(EnumType.STRING)
-   private UserDependency dependency;
-
-   private List<Fila> queues;
+//   @Enumerated(EnumType.ORDINAL)
+//   private UserDependency dependency;
+   @Embedded
+   @ManyToMany(fetch = FetchType.EAGER,
+           cascade = {
+                   CascadeType.ALL
+           })
+   @JoinTable(name = "user_task",
+           joinColumns = { @JoinColumn(name = "user_id") },
+           inverseJoinColumns = { @JoinColumn(name = "task_id") })
+   private Set<Task> tasks = new HashSet<>();
 
    public Long getId() {
       return id;
@@ -91,27 +96,28 @@ public class User {
       this.active = active;
    }
 
-   public UserProfile[] getProfile() {
+   public UserProfile getProfile() {
       return profile;
    }
 
-   public void setProfile(UserProfile[] profile) {
+   public void setProfile(UserProfile profile) {
       this.profile = profile;
    }
 
-   public UserDependency getDependency() {
-      return dependency;
+//   public UserDependency getDependency() {
+//      return dependency;
+//   }
+//
+//   public void setDependency(UserDependency dependency) {
+//      this.dependency = dependency;
+//   }
+
+
+   public Set<Task> getTasks() {
+      return tasks;
    }
 
-   public void setDependency(UserDependency dependency) {
-      this.dependency = dependency;
-   }
-
-   public List<Fila> getQueues() {
-      return queues;
-   }
-
-   public void setQueues(List<Fila> queues) {
-      this.queues = queues;
+   public void setTasks(Task task) {
+      this.getTasks().add(task);
    }
 }
