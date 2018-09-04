@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from './_services/user.service';
-import {User} from './_models/user';
-import {Task} from './_models/task';
 import {TaskService} from './_services/task.service';
 
 @Component({
@@ -12,8 +10,8 @@ import {TaskService} from './_services/task.service';
 export class AppComponent implements OnInit {
   title = 'app';
   users: any;
-  model: User = {};
-  modelTask: Task = {};
+  model: any = {};
+  modelTask: any = {};
   modelUserTask: any = {};
   dependencies: any;
   profiles: any;
