@@ -2,12 +2,17 @@ package com.boraji.tutorial.spring.controller;
 
 import com.boraji.tutorial.spring.model.User;
 import com.boraji.tutorial.spring.service.UserService;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
-
+@CrossOrigin(origins = {"*"}, maxAge = 4800, allowCredentials = "false")
 @RestController
 public class UserController {
 
@@ -54,5 +59,13 @@ public class UserController {
    public ResponseEntity<?> update(@PathVariable("id") long id, @PathVariable("idTask") long idTask) {
       userService.addTask(id, idTask);
       return ResponseEntity.ok().body("Task added successfully.");
+   }
+
+   @RequestMapping(method = RequestMethod.GET,
+           produces = MediaType.APPLICATION_JSON_VALUE)
+   @ResponseStatus(HttpStatus.OK)
+   @ResponseBody
+   public List<User> handleAllUserRequest () {
+      return userService.list();
    }
 }

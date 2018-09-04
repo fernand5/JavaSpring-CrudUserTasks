@@ -2,6 +2,7 @@ package com.boraji.tutorial.spring.dao;
 
 import com.boraji.tutorial.spring.model.Task;
 import com.boraji.tutorial.spring.model.User;
+import com.boraji.tutorial.spring.model.UserTask;
 
 import java.util.List;
 

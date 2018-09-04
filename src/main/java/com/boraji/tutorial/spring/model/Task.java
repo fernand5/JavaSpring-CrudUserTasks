@@ -18,7 +18,7 @@ public class Task {
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER,
             mappedBy = "tasks")
-    private Set<User> users = new HashSet<>();
+    private Set<User> users = new HashSet<User>(0);
 
     public Long getId() {
         return id;

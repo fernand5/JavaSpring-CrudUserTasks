@@ -1,6 +1,5 @@
 package com.boraji.tutorial.spring.service;
 
-import com.boraji.tutorial.spring.model.Book;
 import com.boraji.tutorial.spring.model.User;
 
 import java.util.List;

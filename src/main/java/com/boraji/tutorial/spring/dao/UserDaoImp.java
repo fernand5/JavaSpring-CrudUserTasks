@@ -2,6 +2,7 @@ package com.boraji.tutorial.spring.dao;
 
 import com.boraji.tutorial.spring.model.Task;
 import com.boraji.tutorial.spring.model.User;
+import com.boraji.tutorial.spring.model.UserTask;
 import com.boraji.tutorial.spring.service.TaskService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -46,8 +47,11 @@ public class UserDaoImp implements UserDao {
    public void update(long id, User user) {
       Session session = sessionFactory.getCurrentSession();
       User user2 = session.byId(User.class).load(id);
-      user2.setTitle(user.getTitle());
-      user2.setAuthor(user.getAuthor());
+      user2.setName(user.getName());
+      user2.setDependency(user.getDependency());
+      user2.setProfile(user.getProfile());
+      user2.setActive(user.getActive());
+      user2.setBirthDate(user.getBirthDate());
       session.flush();
    }
 

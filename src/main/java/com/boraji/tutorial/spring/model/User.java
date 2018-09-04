@@ -11,8 +11,9 @@ public class User {
 
    public enum UserProfile {
 
-      Admin("ADMINISTRADOR"),
-      Consult("CONSULT");
+      ADMINISTRADOR("ADMINISTRADOR"),
+      OPERADOR("OPERADOR"),
+      CONSULTA("CONSULTA");
 
       public String value;
       UserProfile(String value){
@@ -20,32 +21,32 @@ public class User {
       }
    }
 
-//   public enum UserDependency {
-//
-//      Consult("CONSULTORIA"),
-//      Company("FABRICA"),
-//      Development("DESARROLLO");
-//
-//      public String value;
-//
-//      UserDependency(String value) {
-//         this.value = value;
-//      }
-//   }
+   public enum UserDependency {
+
+      CONSULTORIA("CONSULTORIA"),
+      FABRICA("FABRICA"),
+      DESARROLLO("DESARROLLO");
+
+      public String value;
+
+      UserDependency(String value) {
+         this.value = value;
+      }
+   }
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
-   private String title;
-   private String author;
+   private String name;
    private Date birthDate;
    private Boolean active;
 
    @Enumerated(EnumType.STRING)
    private UserProfile profile;
 
-//   @Enumerated(EnumType.ORDINAL)
-//   private UserDependency dependency;
+   @Enumerated(EnumType.STRING)
+   private UserDependency dependency;
+
    @Embedded
    @ManyToMany(fetch = FetchType.EAGER,
            cascade = {
@@ -54,7 +55,7 @@ public class User {
    @JoinTable(name = "user_task",
            joinColumns = { @JoinColumn(name = "user_id") },
            inverseJoinColumns = { @JoinColumn(name = "task_id") })
-   private Set<Task> tasks = new HashSet<>();
+   private Set<Task> tasks = new HashSet<Task>();
 
    public Long getId() {
       return id;
@@ -64,20 +65,12 @@ public class User {
       this.id = id;
    }
 
-   public String getTitle() {
-      return title;
+   public String getName() {
+      return name;
    }
 
-   public void setTitle(String title) {
-      this.title = title;
-   }
-
-   public String getAuthor() {
-      return author;
-   }
-
-   public void setAuthor(String author) {
-      this.author = author;
+   public void setName(String name) {
+      this.name = name;
    }
 
    public Date getBirthDate() {
@@ -104,13 +97,13 @@ public class User {
       this.profile = profile;
    }
 
-//   public UserDependency getDependency() {
-//      return dependency;
-//   }
-//
-//   public void setDependency(UserDependency dependency) {
-//      this.dependency = dependency;
-//   }
+   public UserDependency getDependency() {
+      return dependency;
+   }
+
+   public void setDependency(UserDependency dependency) {
+      this.dependency = dependency;
+   }
 
 
    public Set<Task> getTasks() {

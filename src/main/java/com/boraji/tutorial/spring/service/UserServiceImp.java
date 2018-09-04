@@ -3,6 +3,7 @@ package com.boraji.tutorial.spring.service;
 import com.boraji.tutorial.spring.dao.UserDao;
 import com.boraji.tutorial.spring.model.Task;
 import com.boraji.tutorial.spring.model.User;
+import com.boraji.tutorial.spring.model.UserTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,9 @@ public class UserServiceImp implements UserService {
 
    @Autowired
    private UserDao userDao;
+
+   @Autowired
+   private UserTaskService userTask;
 
    @Autowired
    private TaskService taskService;
